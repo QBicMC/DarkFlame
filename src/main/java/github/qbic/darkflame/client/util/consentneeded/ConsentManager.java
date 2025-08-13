@@ -1,4 +1,4 @@
-package github.qbic.darkflame.client.consentneeded;
+package github.qbic.darkflame.client.util.consentneeded;
 
 import net.neoforged.fml.loading.FMLPaths;
 

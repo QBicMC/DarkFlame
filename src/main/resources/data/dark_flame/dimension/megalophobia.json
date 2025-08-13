@@ -1,0 +1,10 @@
+{
+  "type": "dark_flame:megalophobia",
+  "generator": {
+    "type": "dark_flame:megalophobia",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "dark_flame:mobless_megalophobia"
+    }
+  }
+}

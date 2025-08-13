@@ -1,7 +1,7 @@
 {
-  "type": "dark_flame:labyrinth",
+  "type": "dark_flame:the_hallways",
   "generator": {
-    "type": "dark_flame:labyrinth",
+    "type": "dark_flame:the_hallways",
     "biome_source": {
       "type": "minecraft:fixed",
       "biome": "dark_flame:mobless"

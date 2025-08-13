@@ -3,10 +3,10 @@
   "downfall": 0,
   "has_precipitation": false,
   "effects": {
-    "sky_color": 0,
-    "fog_color": 0,
-    "water_color": 0,
-    "water_fog_color": 0
+    "sky_color": -16724788,
+    "fog_color": -1,
+    "water_color": -16750900,
+    "water_fog_color": -16764058
   },
   "creature_spawn_probability": 0,
   "spawners": {},

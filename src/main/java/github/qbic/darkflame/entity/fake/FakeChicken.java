@@ -1,18 +1,13 @@
 package github.qbic.darkflame.entity.fake;
 
-import github.qbic.darkflame.Brain;
-import github.qbic.darkflame.events.ModEvents;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.Level;
 
-public class FakeCow extends Cow implements FakeEntity {
-    public FakeCow(EntityType<? extends Cow> type, Level level) {
+public class FakeChicken extends Chicken implements FakeEntity {
+    public FakeChicken(EntityType<? extends Chicken> type, Level level) {
         super(type, level);
     }
 
@@ -30,5 +25,11 @@ public class FakeCow extends Cow implements FakeEntity {
     @Override
     public PathfinderMob getInstance() {
         return this;
+    }
+
+    @Override
+    public void tick() {
+        onTick();
+        super.tick();
     }
 }

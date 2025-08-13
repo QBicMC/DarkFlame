@@ -4,7 +4,7 @@
   },
   "passes": [
     {
-      "program": "dark_flame:post/invert",
+      "program": "dark_flame:post/pixelate",
       "inputs": [
         {
           "sampler_name": "In",
@@ -14,8 +14,8 @@
       "output": "swap",
       "uniforms": [
         {
-          "name": "InverseAmount",
-          "values": [ 0.8 ]
+          "name": "PixelIntensity",
+          "values": [ 0.5 ]
         }
       ]
     },

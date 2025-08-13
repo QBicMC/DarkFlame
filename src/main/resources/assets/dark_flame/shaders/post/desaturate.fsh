@@ -2,9 +2,9 @@
 
 uniform sampler2D InSampler;
 
-in vec2 texCoord;
+in vec2 texCoord; // yes i misspelled it, but i dont want to fix it
 
-uniform float InverseAmount;
+uniform float Strength;
 
 out vec4 fragColor;
 
@@ -14,6 +14,6 @@ void main(){
     float gray = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
     vec4 grayColor = vec4(gray, gray, gray, diffuseColor.a);
 
-    vec4 outColor = mix(diffuseColor, grayColor, InverseAmount);
+    vec4 outColor = mix(diffuseColor, grayColor, Strength);
     fragColor = vec4(outColor.rgb, 1.0);
 }

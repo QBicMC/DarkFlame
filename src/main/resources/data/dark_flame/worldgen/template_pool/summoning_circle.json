@@ -6,7 +6,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "dark_flame:summoning_circle_v2",
+        "location": "dark_flame:summoning_circle_v3",
         "projection": "rigid",
         "processors": {
           "processors": [

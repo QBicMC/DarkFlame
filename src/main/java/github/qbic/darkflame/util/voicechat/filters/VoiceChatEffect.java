@@ -1,4 +1,5 @@
-package github.qbic.darkflame.util.voicechat;
+package github.qbic.darkflame.util.voicechat.filters;
 
-public class VoiceChatEffect {
+public interface VoiceChatEffect {
+    short[] apply(short[] data);
 }

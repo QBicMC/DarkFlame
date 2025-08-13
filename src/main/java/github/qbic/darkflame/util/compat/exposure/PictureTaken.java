@@ -1,7 +1,7 @@
-package github.qbic.darkflame.compat.exposure;
+package github.qbic.darkflame.util.compat.exposure;
 
-import github.qbic.darkflame.compat.CompatUtils;
-import github.qbic.darkflame.util.HorrorEntity;
+import github.qbic.darkflame.entity.HorrorEntity;
+import github.qbic.darkflame.util.compat.CompatUtils;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

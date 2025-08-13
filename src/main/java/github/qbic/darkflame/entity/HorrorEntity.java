@@ -1,5 +1,6 @@
-package github.qbic.darkflame.util;
+package github.qbic.darkflame.entity;
 
+import github.qbic.darkflame.util.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,8 +16,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public abstract class HorrorEntity extends Monster {
     public VisibilityState visibilityState = VisibilityState.VISIBLE;
     public List<ServerPlayer> seenByPlayers = List.of();
 
-    protected HorrorEntity(EntityType<? extends HorrorEntity> type, Level level) {
+    public HorrorEntity(EntityType<? extends HorrorEntity> type, Level level) {
         super(type, level);
     }
 
@@ -41,6 +40,11 @@ public abstract class HorrorEntity extends Monster {
         super.tick();
     }
 
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
     public abstract boolean isInvulnerable();
 
     // public abstract void getAnimationResource();
@@ -49,14 +53,16 @@ public abstract class HorrorEntity extends Monster {
 
     protected void onSpawn(ServerLevelAccessor level) { }
 
-    protected void onSeenByPlayer(Player player) { }
+    public void onSeenByPlayer(Player player) { }
 
     protected void onSeenByPlayerTick(List<ServerPlayer> players) { }
 
     protected void onNotSeenTick(VisibilityState visibilityType) { }
 
+    public void onSeenThirdPerson(Player player) { }
+
     protected void onServerTick() {
-        seenByPlayers = Util.getPlayersLookingAt(this, (ServerLevel) this.level(), 10, getLookSensitivity());
+        seenByPlayers = Util.getPlayersLookingAt(this, (ServerLevel) this.level(), getMaxDistance(), getLookSensitivity());
 
         switch (visibilityState) {
             case VISIBLE -> onSeenByPlayerTick(seenByPlayers);
@@ -65,9 +71,13 @@ public abstract class HorrorEntity extends Monster {
         }
     }
 
+    protected int getMaxDistance() {
+        return 50;
+    }
+
     protected void onClientTick() { }
 
-    // a lower number, like 0.9, means the player needs to look directly at the entity to be count as seen
+    // a higher number, like 0.9, means the player needs to look directly at the entity to be count as seen
     protected double getLookSensitivity() {
         return 0.5;
     }

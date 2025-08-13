@@ -1,19 +1,18 @@
 #version 150
 
 uniform sampler2D InSampler;
+uniform vec2 InSize;
 
 in vec2 texCoord;
 
-uniform float InverseAmount;
+uniform float PixelIntensity; // Controls pixelation intensity
 
 out vec4 fragColor;
 
 void main(){
-    vec4 diffuseColor = texture(InSampler, texCoord);
-
-    float gray = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
-    vec4 grayColor = vec4(gray, gray, gray, diffuseColor.a);
-
-    vec4 outColor = mix(diffuseColor, grayColor, InverseAmount);
-    fragColor = vec4(outColor.rgb, 1.0);
+    float pixelSize = 1.0 + PixelIntensity * 32.0;
+    vec2 pixelScale = pixelSize / InSize;
+    vec2 pixelatedCoord = floor(texCoord / pixelScale) * pixelScale;
+    vec4 pixelatedColor = texture(InSampler, pixelatedCoord);
+    fragColor = vec4(pixelatedColor.rgb, 1.0);
 }

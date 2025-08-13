@@ -1,4 +1,4 @@
-package github.qbic.darkflame.util;
+package github.qbic.darkflame.client.util;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;

@@ -1,0 +1,246 @@
+{
+  "haggstrom_flatline": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/haggstrom_flatline",
+        "stream": false
+      }
+    ]
+  },
+  "bells": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/bells",
+        "stream": false
+      }
+    ]
+  },
+  "bell": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/bell",
+        "stream": false
+      }
+    ]
+  },
+  "knocking": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/knocking",
+        "stream": false
+      }
+    ]
+  },
+  "music_box": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/music_box",
+        "stream": false
+      }
+    ]
+  },
+  "attack": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/attack/attack_0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/attack/attack_1",
+        "stream": false
+      }
+    ]
+  },
+  "observer_spawn": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/spawn/observer/attack_0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/spawn/observer/attack_1",
+        "stream": false
+      }
+    ]
+  },
+  "watcher_spawn": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/spawn/watcher/attack_0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/spawn/watcher/attack_1",
+        "stream": false
+      }
+    ]
+  },
+  "observer_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/observer/observer_ambient_0",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/observer/observer_ambient_1",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/observer/observer_ambient_2",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/observer/observer_ambient_3",
+        "stream": true
+      }
+    ]
+  },
+  "smiley_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_0",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_1",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_2",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_3",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_4",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_5",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/smiley/smiley_ambient_6",
+        "stream": true
+      }
+    ]
+  },
+  "watcher_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/watcher/watcher_ambient_0",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/watcher/watcher_ambient_1",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/watcher/watcher_ambient_2",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/watcher/watcher_ambient_3",
+        "stream": true
+      },
+      {
+        "name": "dark_flame:ambient/watcher/watcher_ambient_4",
+        "stream": true
+      }
+    ]
+  },
+  "singularity_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/singularity/singularity_ambient_0",
+        "stream": true
+      }
+    ]
+  },
+  "singularity_jumpscare": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/jumpscare/singularity/singularity_jumpscare0",
+        "stream": false
+      }
+    ]
+  },
+  "singularity_jumpscare_overlay": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/overlay/singularity_attack_overlay0",
+        "stream": false
+      }
+    ]
+  },
+  "exclusion_hack": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/hack/exclusion/exclusion_hack0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/hack/exclusion/exclusion_hack1",
+        "stream": false
+      }
+    ]
+  },
+  "intrusion_hack": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/hack/intrusion/intrusion_hack0",
+        "stream": false
+      }
+    ]
+  },
+  "guardian_jumpscare": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/jumpscare/guardian/guardian_jumpscare0",
+        "stream": false
+      }
+    ]
+  },
+  "exclusion_jumpscare": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/jumpscare/exclusion/exclusion_jumpscare0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/jumpscare/exclusion/exclusion_jumpscare1",
+        "stream": false
+      }
+    ]
+  },
+  "no_escape": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/noescape/intrusion_no_escape0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:sfx/noescape/intrusion_no_escape1",
+        "stream": false
+      }
+    ]
+  },
+  "glitch_overlay": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/overlay/glitch_overlay0",
+        "stream": false
+      }
+    ]
+  },
+  "static_overlay": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/overlay/static_overlay0",
+        "stream": false
+      }
+    ]
+  }
+}

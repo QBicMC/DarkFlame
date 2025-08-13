@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "dark_flame:tar",
     "dark_flame:writing"
   ]
 }

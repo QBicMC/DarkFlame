@@ -1,7 +1,7 @@
-package github.qbic.darkflame.events;
+package github.qbic.darkflame.events.buildup;
 
 import github.qbic.darkflame.Brain;
-import github.qbic.darkflame.util.ModEvent;
+import github.qbic.darkflame.events.ModEvent;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -18,5 +18,10 @@ public class SpawnVillagerInAirEvent extends ModEvent {
         Player target = Brain.getTarget();
         BlockPos spawnPos = Util.randomAirPosBehindPlayer(target.level(), target, 32, 32);
         Util.spawnEntityAt(spawnPos, target.level(), EntityType.VILLAGER, true);
+    }
+
+    @Override
+    public String name() {
+        return "floating_villager";
     }
 }

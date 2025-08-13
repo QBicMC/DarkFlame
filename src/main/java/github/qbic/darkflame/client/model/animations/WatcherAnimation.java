@@ -1,9 +1,9 @@
 package github.qbic.darkflame.client.model.animations;
 
-import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 
 // Save this class in your mod and generate all required imports
 /**
@@ -12,7 +12,7 @@ import net.minecraft.client.animation.AnimationChannel;
  * 
  * @author Author
  */
-public class watcherAnimation {
+public class WatcherAnimation {
 	public static final AnimationDefinition idle = AnimationDefinition.Builder.withLength(0.7083F).looping()
 			.addAnimation("head",
 					new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),

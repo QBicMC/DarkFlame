@@ -1,6 +1,6 @@
-package github.qbic.darkflame.compat;
+package github.qbic.darkflame.util.compat;
 
-import github.qbic.darkflame.compat.exposure.PictureTaken;
+import github.qbic.darkflame.util.compat.exposure.PictureTaken;
 import net.neoforged.fml.ModList;
 
 public class CompatUtils {
@@ -18,7 +18,6 @@ public class CompatUtils {
         return false;
     }
 
-    //TODO: register in main class
     public static void registerCompatEvents() {
         runIfExists(EXPOSURE_ID, PictureTaken::registerEvent);
     }

@@ -1,0 +1,10 @@
+{
+  "type": "dark_flame:labyrinth",
+  "generator": {
+    "type": "dark_flame:labyrinth",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "dark_flame:mobless"
+    }
+  }
+}

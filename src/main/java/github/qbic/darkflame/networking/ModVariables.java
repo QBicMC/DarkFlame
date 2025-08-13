@@ -1,10 +1,5 @@
 package github.qbic.darkflame.networking;
 
-import github.qbic.darkflame.Darkflame;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.registries.DeferredRegister;
-
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -30,13 +25,18 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.HolderLookup;
 
+import github.qbic.darkflame.DarkFlame;
+
+/**
+ * partially generated with <a href = "https://mcreator.net">mcreator</a> because im lazy
+ */
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
-public class SyncedVariables {
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Darkflame.MODID);
+public class ModVariables {
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, DarkFlame.MOD_ID);
 
     @SubscribeEvent
     public static void init(FMLCommonSetupEvent event) {
-        Darkflame.addNetworkMessage(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC, SavedDataSyncMessage::handleData);
+        DarkFlame.addNetworkMessage(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC, SavedDataSyncMessage::handleData);
     }
 
     @EventBusSubscriber
@@ -66,6 +66,8 @@ public class SyncedVariables {
     public static class WorldVariables extends SavedData {
         public static final String DATA_NAME = "dark_flame_worldvars";
         public double anger = 0;
+        public boolean started = false;
+        public double halfDays = 0;
 
         public static WorldVariables load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
             WorldVariables data = new WorldVariables();
@@ -75,11 +77,15 @@ public class SyncedVariables {
 
         public void read(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
             anger = nbt.getDouble("anger");
+            started = nbt.getBoolean("started");
+            halfDays = nbt.getDouble("halfDays");
         }
 
         @Override
         public CompoundTag save(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
             nbt.putDouble("anger", anger);
+            nbt.putBoolean("started", started);
+            nbt.putDouble("halfDays", halfDays);
             return nbt;
         }
 
@@ -135,7 +141,7 @@ public class SyncedVariables {
     }
 
     public record SavedDataSyncMessage(int dataType, SavedData data) implements CustomPacketPayload {
-        public static final Type<SavedDataSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Darkflame.MODID, "saved_data_sync"));
+        public static final Type<SavedDataSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "saved_data_sync"));
         public static final StreamCodec<RegistryFriendlyByteBuf, SavedDataSyncMessage> STREAM_CODEC = StreamCodec.of((RegistryFriendlyByteBuf buffer, SavedDataSyncMessage message) -> {
             buffer.writeInt(message.dataType);
             if (message.data != null)

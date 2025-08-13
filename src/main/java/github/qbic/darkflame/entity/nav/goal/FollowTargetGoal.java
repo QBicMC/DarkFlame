@@ -1,4 +1,4 @@
-package github.qbic.darkflame.entity.goal;
+package github.qbic.darkflame.entity.nav.goal;
 
 import github.qbic.darkflame.Brain;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,8 +13,8 @@ import java.util.EnumSet;
 public class FollowTargetGoal extends Goal {
 
     protected final PathfinderMob mob;
-    private final double walkSpeedModifier;
-    private final double sprintSpeedModifier;
+    private final float walkSpeedModifier;
+    private final float sprintSpeedModifier;
     protected final float minDistance;
     @Nullable
     protected Path path;
@@ -23,8 +23,8 @@ public class FollowTargetGoal extends Goal {
     public FollowTargetGoal(
             PathfinderMob mob,
             float minDistance,
-            double walkSpeedModifier,
-            double sprintSpeedModifier
+            float walkSpeedModifier,
+            float sprintSpeedModifier
     ) {
         this.mob = mob;
         this.pathNav = mob.getNavigation();
@@ -40,7 +40,7 @@ public class FollowTargetGoal extends Goal {
         if (target == null || !target.isAlive()) return false;
         if (mob.distanceToSqr(target) <= minDistance * minDistance) return false;
 
-        this.path = pathNav.createPath(target, 0);
+        this.path = pathNav.createPath(target, 5);
         return this.path != null;
     }
 

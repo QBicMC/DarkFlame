@@ -1,8 +1,8 @@
-package github.qbic.darkflame.events;
+package github.qbic.darkflame.events.major;
 
 import github.qbic.darkflame.Brain;
+import github.qbic.darkflame.events.ModEvent;
 import github.qbic.darkflame.init.ModEntities;
-import github.qbic.darkflame.util.ModEvent;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -40,5 +40,10 @@ public class SpawnActiveEntityEvent extends ModEvent {
         Player target = Brain.getTarget();
         BlockPos spawnPos = Util.searchAroundWithBias(target.level(), Util.randomPosInRange(target.blockPosition(), 64, 72), target.blockPosition());
         Util.spawnEntityAt(spawnPos, target.level(), ModEntities.OBSERVER.get());
+    }
+
+    @Override
+    public String name() {
+        return "spawn_active_entity";
     }
 }

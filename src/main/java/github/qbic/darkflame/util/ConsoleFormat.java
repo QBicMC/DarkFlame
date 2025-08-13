@@ -1,4 +1,4 @@
-package github.qbic.spellended.util;
+package github.qbic.darkflame.util;
 
 // uses ANSI escape codes
 public class ConsoleFormat {

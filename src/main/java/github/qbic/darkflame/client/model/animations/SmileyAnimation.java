@@ -1,9 +1,9 @@
 package github.qbic.darkflame.client.model.animations;
 
-import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.AnimationChannel;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 
 // Save this class in your mod and generate all required imports
 /**

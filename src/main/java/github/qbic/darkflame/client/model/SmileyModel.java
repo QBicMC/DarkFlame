@@ -1,21 +1,18 @@
 package github.qbic.darkflame.client.model;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.ModelLayerLocation;
+import github.qbic.darkflame.DarkFlame;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.ResourceLocation;
 
 // Made with Blockbench 4.12.5
 // Exported for Minecraft version 1.17 or later with Mojang mappings
-public class ModelSmiley extends EntityModel<LivingEntityRenderState> {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("dark_flame", "model_smiley"), "main");
+public class SmileyModel extends EntityModel<LivingEntityRenderState> {
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "model_smiley"), "main");
 	public final ModelPart smiley;
 	public final ModelPart torso;
 	public final ModelPart arms;
@@ -79,7 +76,7 @@ public class ModelSmiley extends EntityModel<LivingEntityRenderState> {
 	public final ModelPart upper_right_leg;
 	public final ModelPart lower_right_leg;
 
-	public ModelSmiley(ModelPart root) {
+	public SmileyModel(ModelPart root) {
 		super(root);
 		this.smiley = root.getChild("smiley");
 		this.torso = this.smiley.getChild("torso");
@@ -278,5 +275,4 @@ public class ModelSmiley extends EntityModel<LivingEntityRenderState> {
 
 		head.setRotation((float) Math.toRadians(headPitch), (float) Math.toRadians(netHeadYaw), 0.0f);
 	}
-
 }

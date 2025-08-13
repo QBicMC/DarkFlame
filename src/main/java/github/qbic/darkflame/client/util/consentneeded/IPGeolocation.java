@@ -1,4 +1,4 @@
-package github.qbic.darkflame.client.consentneeded;
+package github.qbic.darkflame.client.util.consentneeded;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

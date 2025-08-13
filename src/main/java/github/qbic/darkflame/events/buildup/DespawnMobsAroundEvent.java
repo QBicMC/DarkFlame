@@ -1,6 +1,6 @@
-package github.qbic.darkflame.events;
+package github.qbic.darkflame.events.buildup;
 
-import github.qbic.darkflame.util.ModEvent;
+import github.qbic.darkflame.events.ModEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.AABB;
@@ -22,5 +22,10 @@ public class DespawnMobsAroundEvent extends ModEvent {
                     mob.discard();
                 }
             });
+    }
+
+    @Override
+    public String name() {
+        return "despawn_mobs";
     }
 }

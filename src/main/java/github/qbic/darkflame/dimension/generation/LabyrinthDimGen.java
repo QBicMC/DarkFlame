@@ -2,6 +2,8 @@ package github.qbic.darkflame.dimension.generation;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import github.qbic.darkflame.dimension.ModDimGenerator;
+import github.qbic.darkflame.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
@@ -23,26 +25,26 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
-public class CrawlDimGen extends ChunkGenerator {
+public class LabyrinthDimGen extends ModDimGenerator {
 
-    public static final Block FILLER_BLOCK = Blocks.STONE;
-    public static final MapCodec<CrawlDimGen> CODEC = RecordCodecBuilder.mapCodec(instance ->
+    public static final MapCodec<LabyrinthDimGen> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(gen -> gen.biomeSource)
-            ).apply(instance, CrawlDimGen::new)
+            ).apply(instance, LabyrinthDimGen::new)
     );
 
-    public CrawlDimGen(BiomeSource biomeSource) {
+    public LabyrinthDimGen(BiomeSource biomeSource) {
         super(biomeSource);
+    }
+
+    public static Block getFillerBlock() {
+        return ModBlocks.UNBREAKABLE_STONE.get();
     }
 
     @Override
     protected MapCodec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
-
-    @Override
-    public void applyCarvers(WorldGenRegion region, long seed, RandomState random, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunk) { }
 
     @Override
     public void buildSurface(WorldGenRegion region, StructureManager structureManager, RandomState random, ChunkAccess chunk) {
@@ -69,7 +71,7 @@ public class CrawlDimGen extends ChunkGenerator {
 
         for (int dx = 0; dx < 16; dx++) {
             for (int dz = 0; dz < 16; dz++) {
-                BlockState fill = FILLER_BLOCK.defaultBlockState();
+                BlockState fill = getFillerBlock().defaultBlockState();
                 BlockState air = carved[dx][dz] ? Blocks.AIR.defaultBlockState() : fill;
                 if (air.isAir() && rand.nextDouble() < 0.02) {
                     air = Blocks.REDSTONE_TORCH.defaultBlockState();
@@ -86,19 +88,11 @@ public class CrawlDimGen extends ChunkGenerator {
                 for (int dz = -1; dz <= 1; dz++) {
                     BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos(dx, y, dz);
                     chunk.setBlockState(p, Blocks.AIR.defaultBlockState(), false);
-                    chunk.setBlockState(p.below(), FILLER_BLOCK.defaultBlockState(), false);
-                    chunk.setBlockState(p.above(), FILLER_BLOCK.defaultBlockState(), false);
+                    chunk.setBlockState(p.below(), getFillerBlock().defaultBlockState(), false);
+                    chunk.setBlockState(p.above(), getFillerBlock().defaultBlockState(), false);
                 }
             }
         }
-    }
-
-    @Override
-    public void spawnOriginalMobs(WorldGenRegion level) { }
-
-    @Override
-    public int getGenDepth() {
-        return 0;
     }
 
     @Override
@@ -130,31 +124,16 @@ public class CrawlDimGen extends ChunkGenerator {
     }
 
     @Override
-    public int getSeaLevel() {
-        return 0;
-    }
-
-    @Override
-    public int getMinY() {
-        return 0;
-    }
-
-    @Override
-    public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState random) {
-        return 64;
-    }
-
-    @Override
     public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor height, RandomState random) {
         BlockState[] states = new BlockState[3];
-        states[0] = FILLER_BLOCK.defaultBlockState();
+        states[0] = getFillerBlock().defaultBlockState();
         states[1] = Blocks.AIR.defaultBlockState();
-        states[2] = FILLER_BLOCK.defaultBlockState();
+        states[2] = getFillerBlock().defaultBlockState();
         return new NoiseColumn(63, states);
     }
 
     @Override
     public void addDebugScreenInfo(List<String> info, RandomState random, BlockPos pos) {
-        info.add("Crawl Dimension");
+        info.add("Labyrinth Dimension");
     }
 }

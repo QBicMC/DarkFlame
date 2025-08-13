@@ -1,11 +1,16 @@
-package github.qbic.darkflame.util;
+package github.qbic.darkflame.util.voicechat;
 
-import de.maxhenkel.voicechat.api.*;
+import de.maxhenkel.voicechat.api.VoicechatConnection;
+import de.maxhenkel.voicechat.api.VoicechatPlugin;
+import de.maxhenkel.voicechat.api.VoicechatServerApi;
 import de.maxhenkel.voicechat.api.audiochannel.AudioPlayer;
 import de.maxhenkel.voicechat.api.audiochannel.LocationalAudioChannel;
-import de.maxhenkel.voicechat.api.events.*;
+import de.maxhenkel.voicechat.api.events.EventRegistration;
+import de.maxhenkel.voicechat.api.events.MicrophonePacketEvent;
+import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
 import de.maxhenkel.voicechat.api.opus.OpusDecoder;
-import github.qbic.darkflame.Darkflame;
+import github.qbic.darkflame.DarkFlame;
+import github.qbic.darkflame.util.voicechat.filters.VoiceChatEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,9 +18,6 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Borrowed some from SpacePotato's <a href="https://github.com/SpacePotatoee/MinecraftFoundFootage">Backrooms mod</a>
- */
 public class VoiceChat implements VoicechatPlugin {
     public static VoiceChat INSTANCE;
     private VoicechatServerApi voicechat;
@@ -65,15 +67,20 @@ public class VoiceChat implements VoicechatPlugin {
         }
     }
 
-    public void playRandomClipAt(ServerLevel level, BlockPos pos, UUID sourceUuid) {
-        List<short[]> clips = recordedClips.get(sourceUuid);
+    public void playRandomClipAt(ServerLevel level, BlockPos pos, UUID sourceUUID, VoiceChatEffect... effects) {
+        List<short[]> clips = recordedClips.get(sourceUUID);
+        System.out.println(recordedClips);
         if (clips == null || clips.isEmpty()) return;
 
         short[] data = clips.get(random.nextInt(clips.size()));
         if (data == null || data.length == 0) return;
 
+        for (VoiceChatEffect effect : effects) {
+            data = effect.apply(data);
+        }
+
         LocationalAudioChannel channel = voicechat.createLocationalAudioChannel(
-                sourceUuid,
+                sourceUUID,
                 voicechat.fromServerLevel(level),
                 voicechat.createPosition(pos.getX(), pos.getY(), pos.getZ())
         );
@@ -102,6 +109,6 @@ public class VoiceChat implements VoicechatPlugin {
 
     @Override
     public String getPluginId() {
-        return Darkflame.MODID;
+        return DarkFlame.MOD_ID;
     }
 }

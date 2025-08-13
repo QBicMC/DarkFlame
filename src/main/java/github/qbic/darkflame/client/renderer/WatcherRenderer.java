@@ -1,27 +1,25 @@
 package github.qbic.darkflame.client.renderer;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.model.geom.ModelPart;
-
-import github.qbic.darkflame.entity.WatcherEntity;
-import github.qbic.darkflame.client.model.animations.watcherAnimation;
-import github.qbic.darkflame.client.model.Modelwatcher;
-
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import github.qbic.darkflame.client.model.SimpleHumanoidModel;
+import github.qbic.darkflame.client.model.animations.WatcherAnimation;
+import github.qbic.darkflame.entity.WatcherEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 
-public class WatcherRenderer extends MobRenderer<WatcherEntity, LivingEntityRenderState, Modelwatcher> {
+public class WatcherRenderer extends MobRenderer<WatcherEntity, LivingEntityRenderState, SimpleHumanoidModel> {
 	private WatcherEntity entity = null;
 
 	public WatcherRenderer(EntityRendererProvider.Context context) {
-		super(context, new AnimatedModel(context.bakeLayer(Modelwatcher.LAYER_LOCATION)), 0.5f);
+		super(context, new AnimatedModel(context.bakeLayer(SimpleHumanoidModel.LAYER_LOCATION)), 0.5f);
 		this.addLayer(new RenderLayer<>(this) {
 			final ResourceLocation LAYER_TEXTURE = ResourceLocation.parse("dark_flame:textures/entities/watcher.png");
 
@@ -52,7 +50,7 @@ public class WatcherRenderer extends MobRenderer<WatcherEntity, LivingEntityRend
 		return ResourceLocation.parse("dark_flame:textures/entities/watcher.png");
 	}
 
-	private static final class AnimatedModel extends Modelwatcher {
+	private static final class AnimatedModel extends SimpleHumanoidModel {
 		private WatcherEntity entity = null;
 
 		public AnimatedModel(ModelPart root) {
@@ -66,9 +64,9 @@ public class WatcherRenderer extends MobRenderer<WatcherEntity, LivingEntityRend
 		@Override
 		public void setupAnim(LivingEntityRenderState state) {
 			this.root().getAllParts().forEach(ModelPart::resetPose);
-			this.animate(entity.animationState0, watcherAnimation.idle, state.ageInTicks, 1f);
-			this.animateWalk(watcherAnimation.run, state.walkAnimationPos, state.walkAnimationSpeed, 1f, 1f);
-			this.animate(entity.animationState2, watcherAnimation.disappear, state.ageInTicks, 1f);
+			this.animate(entity.animationState0, WatcherAnimation.idle, state.ageInTicks, 1f);
+			this.animateWalk(WatcherAnimation.run, state.walkAnimationPos, state.walkAnimationSpeed, 1f, 1f);
+			this.animate(entity.animationState2, WatcherAnimation.disappear, state.ageInTicks, 1f);
 			super.setupAnim(state);
 		}
 	}

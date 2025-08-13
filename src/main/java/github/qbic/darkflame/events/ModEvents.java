@@ -1,14 +1,18 @@
-package github.qbic.darkflame.util;
+package github.qbic.darkflame.events;
 
-import github.qbic.darkflame.events.buildup.DespawnMobsAroundEvent;
-import github.qbic.darkflame.events.buildup.SpawnVillagerInAirEvent;
-import github.qbic.darkflame.events.buildup.WritingEvent;
+import github.qbic.darkflame.events.buildup.*;
 import github.qbic.darkflame.events.client.ApplyShaderEvent;
 import github.qbic.darkflame.events.client.ChangeWindowEvent;
+import github.qbic.darkflame.events.client.SingularityAttackClient;
+import github.qbic.darkflame.events.jumpscares.SingularityAttack;
 import github.qbic.darkflame.events.major.SpawnActiveEntityEvent;
+import github.qbic.darkflame.events.major.SpawnFakeMobEvent;
+import github.qbic.darkflame.events.major.SpawnSingularityEvent;
 import github.qbic.darkflame.events.major.SpawnSmileyBehindEvent;
 import github.qbic.darkflame.events.minor.DamagePlayerEvent;
+import github.qbic.darkflame.events.minor.SignEvent;
 import github.qbic.darkflame.events.minor.PullDownEvent;
+import github.qbic.darkflame.util.StringClientModEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +41,24 @@ public final class ModEvents {
     public static final DespawnMobsAroundEvent DESPAWN_MOBS_AROUND_EVENT = new DespawnMobsAroundEvent();
     public static final DamagePlayerEvent DAMAGE_PLAYER_EVENT = new DamagePlayerEvent();
     public static final PullDownEvent PULL_DOWN_EVENT = new PullDownEvent();
+    public static final SpawnSingularityEvent SPAWN_SINGULARITY_EVENT = new SpawnSingularityEvent();
+    public static final SpawnFakeMobEvent SPAWN_FAKE_MOB_EVENT = new SpawnFakeMobEvent();
+    public static final ArmorStandEvent ARMOR_STAND_EVENT = new ArmorStandEvent();
+    public static final FootStepsEvent FOOT_STEPS_EVENT = new FootStepsEvent();
+    public static final CountDownToNightEvent COUNT_DOWN_TO_NIGHT_EVENT = new CountDownToNightEvent();
+    public static final FakeDownloadEvent DOWNLOAD_EVENT = new FakeDownloadEvent();
+    public static final SignWithNameEvent SIGN_WITH_NAME_EVENT = new SignWithNameEvent();
+    public static final BlockDoorEvent BLOCK_DOOR_EVENT = new BlockDoorEvent();
+    public static final JumpMessageEvent JUMP_MESSAGE_EVENT = new JumpMessageEvent();
+    public static final SignEvent SIGN_EVENT = new SignEvent();
+
+    public static final BlankEvent BLANK = new BlankEvent();
+
+    // jumpscare events
+    public static final SingularityAttack SINGULARITY_ATTACK_EVENT = new SingularityAttack();
 
     // client
     public static final ApplyShaderEvent APPLY_SHADER_EVENT = new ApplyShaderEvent();
     public static final ChangeWindowEvent CHANGE_WINDOW_EVENT = new ChangeWindowEvent();
+    public static final SingularityAttackClient SINGULARITY_ATTACK_CLIENT_EVENT = new SingularityAttackClient();
 }

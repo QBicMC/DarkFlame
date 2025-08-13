@@ -1,120 +1,133 @@
 package github.qbic.darkflame;
 
-import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
+import com.mojang.serialization.MapCodec;
+import github.qbic.darkflame.dimension.Dims;
+import github.qbic.darkflame.events.ModEvents;
+import github.qbic.darkflame.init.*;
+import github.qbic.darkflame.networking.ModVariables;
+import github.qbic.darkflame.networking.S2C.VolumePayload;
+import github.qbic.darkflame.util.TestCommand;
+import github.qbic.darkflame.util.compat.CompatUtils;
+import github.qbic.darkflame.util.voicechat.filters.BlankEffect;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.slf4j.Logger;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.RegisterEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(Darkflame.MODID)
-public class Darkflame {
-    // Define mod id in a common place for everything to reference
-    public static final String MODID = "darkflame";
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "darkflame" namespace
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "darkflame" namespace
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "darkflame" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-    // Creates a new Block with the id "darkflame:example_block", combining the namespace and path
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    // Creates a new BlockItem with the id "darkflame:example_block", combining the namespace and path
-    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
+@Mod(DarkFlame.MOD_ID)
+public class DarkFlame {
+    public static final Logger LOGGER = LogManager.getLogger(DarkFlame.class);
+    public static final String MOD_ID = "dark_flame";
+    public static final boolean DEBUG = true;
 
-    // Creates a new food item with the id "darkflame:example_id", nutrition 1 and saturation 2
-    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).build()));
-
-    // Creates a creative tab with the id "darkflame:example_tab" for the example item, that is placed after the combat tab
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.darkflame")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> EXAMPLE_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
-        output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-    }).build());
-
-    // The constructor for the mod class is the first code that is run when your mod is loaded.
-    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public Darkflame(IEventBus modEventBus, ModContainer modContainer) {
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
-
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (Darkflame) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+    public DarkFlame(IEventBus modEventBus, ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::registerNetworking);
 
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        ModBlocks.REGISTRY.register(modEventBus);
+        ModItems.REGISTRY.register(modEventBus);
+        ModEntities.REGISTRY.register(modEventBus);
+        ModTabs.REGISTRY.register(modEventBus);
+        ModVariables.ATTACHMENT_TYPES.register(modEventBus);
+        ModSounds.REGISTRY.register(modEventBus);
+        ModFluids.REGISTRY.register(modEventBus);
+        ModFluidTypes.REGISTRY.register(modEventBus);
+        ModParticleTypes.REGISTRY.register(modEventBus);
+        ModMenus.REGISTRY.register(modEventBus);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        registerTests();
+        CompatUtils.registerCompatEvents();
+
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+    public static void registerDimGenerator(RegisterEvent event, String name, MapCodec<? extends ChunkGenerator> codec) {
+        event.register(
+                Registries.CHUNK_GENERATOR,
+                ResourceLocation.fromNamespaceAndPath(MOD_ID, name),
+                () -> codec
+        );
     }
 
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(EXAMPLE_BLOCK_ITEM);
+    private void registerTests() {
+        TestCommand.addTest("vc", () -> Brain.VOICE_CHAT.playRandomClipAt((ServerLevel) Brain.getTarget().level(), Brain.getTarget().getOnPos(), Brain.getTarget().getUUID(), new BlankEffect()), TestCommand.Side.SERVER);
+        TestCommand.addTest("deafen", () -> VolumePayload.send(Brain.getTarget(), 0), TestCommand.Side.SERVER);
+        TestCommand.addTest("smly_behind", ModEvents.SPAWN_SMILEY_BEHIND_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("writing", ModEvents.WRITING_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("shader", () -> ModEvents.APPLY_SHADER_EVENT.execute(MOD_ID + ":pixelate"), TestCommand.Side.SERVER);
+        TestCommand.addTest("labyrinth", Dims::teleportTargetToLabyrinth, TestCommand.Side.SERVER);
+        TestCommand.addTest("start", Brain::begin, TestCommand.Side.SERVER);
+        TestCommand.addTest("no_escape", () -> Brain.setNoEscapeFor(100), TestCommand.Side.SERVER);
+        TestCommand.addTest("window_change", ModEvents.CHANGE_WINDOW_EVENT::execute, TestCommand.Side.CLIENT);
+        TestCommand.addTest("singularity", ModEvents.SPAWN_SINGULARITY_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("event_sequence", Brain::triggerEventSequence, TestCommand.Side.SERVER);
+        TestCommand.addTest("the_hallways", Dims::teleportTargetToTheHallways, TestCommand.Side.SERVER);
+        TestCommand.addTest("megalophobia", Dims::teleportTargetToMEGALOPHOBIA, TestCommand.Side.SERVER);
+        TestCommand.addTest("fake_villager", Brain::spawnFakeVillager, TestCommand.Side.SERVER);
+        TestCommand.addTest("countdown_night", ModEvents.COUNT_DOWN_TO_NIGHT_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("name_sign", ModEvents.SIGN_WITH_NAME_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("block_door", ModEvents.BLOCK_DOOR_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("sign", ModEvents.SIGN_EVENT::execute, TestCommand.Side.SERVER);
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    private static boolean networkingRegistered = false;
+    private static final Map<CustomPacketPayload.Type<?>, NetworkMessage<?>> MESSAGES = new HashMap<>();
+
+    private record NetworkMessage<T extends CustomPacketPayload>(StreamCodec<? extends FriendlyByteBuf, T> reader, IPayloadHandler<T> handler) {
+    }
+
+    public static <T extends CustomPacketPayload> void addNetworkMessage(CustomPacketPayload.Type<T> id, StreamCodec<? extends FriendlyByteBuf, T> reader, IPayloadHandler<T> handler) {
+        if (networkingRegistered)
+            throw new IllegalStateException("Cannot register new network messages after networking has been registered");
+        MESSAGES.put(id, new NetworkMessage<>(reader, handler));
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void registerNetworking(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(MOD_ID);
+        MESSAGES.forEach((id, networkMessage) -> registrar.playBidirectional(id, ((NetworkMessage) networkMessage).reader(), ((NetworkMessage) networkMessage).handler()));
+        networkingRegistered = true;
+    }
+
+    private static final Collection<Tuple<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
+
+    public static void queueServerWork(int tick, Runnable action) {
+        if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+            workQueue.add(new Tuple<>(action, tick));
+    }
+
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
+    public void tick(ServerTickEvent.Post event) {
+        List<Tuple<Runnable, Integer>> actions = new ArrayList<>();
+        workQueue.forEach(work -> {
+            work.setB(work.getB() - 1);
+            if (work.getB() == 0) {
+                actions.add(work);
+            }
+        });
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        }
+        actions.forEach(e -> e.getA().run());
+        workQueue.removeAll(actions);
     }
 }

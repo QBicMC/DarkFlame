@@ -4,7 +4,7 @@
   },
   "passes": [
     {
-      "program": "dark_flame:post/invert",
+      "program": "dark_flame:post/desaturate",
       "inputs": [
         {
           "sampler_name": "In",
@@ -14,7 +14,7 @@
       "output": "swap",
       "uniforms": [
         {
-          "name": "InverseAmount",
+          "name": "Strength",
           "values": [ 1.0 ]
         }
       ]

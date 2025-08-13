@@ -1,17 +1,14 @@
-package github.qbic.darkflame.events;
+package github.qbic.darkflame.events.buildup;
 
 import github.qbic.darkflame.Brain;
+import github.qbic.darkflame.events.ModEvent;
 import github.qbic.darkflame.init.ModBlocks;
-import github.qbic.darkflame.util.BaseScanner;
-import github.qbic.darkflame.util.ModEvent;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -130,4 +127,9 @@ public class WritingEvent extends ModEvent {
     }
 
     public record WritingData(BlockPos wallPos, Direction direction) { }
+
+    @Override
+    public String name() {
+        return "writing";
+    }
 }

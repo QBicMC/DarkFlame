@@ -1,11 +1,40 @@
 {
   "item.dark_flame.smiley_spawn_egg": "Smiley Spawn Egg",
-  "entity.dark_flame.smiley": "Smiley",
   "item.dark_flame.writing": "Writing",
   "item.dark_flame.err_null": "err.null",
   "item_group.dark_flame.dark_flame_tab": "Dark Flame",
   "item.dark_flame.watcher_spawn_egg": "Watcher Spawn Egg",
+  "item.dark_flame.observer_spawn_egg": "Observer Spawn Egg",
+
+  "entity.dark_flame.smiley": "Smiley",
   "entity.dark_flame.watcher": "Watcher",
-  "item.dark_flame.observer_spawn_egg": "Watcher Spawn Egg",
-  "entity.dark_flame.observer": "Watcher"
+  "entity.dark_flame.observer": "Observer",
+
+  "subtitles.haggstrom_flatline": "§kend",
+  "subtitles.bells": "death is here",
+  "subtitles.knocking": "it wants in",
+  "subtitles.music_box": "die",
+  "subtitles.attack": "",
+  "subtitles.observer_spawn": "it watches",
+  "subtitles.watcher_spawn": "it follows",
+  "subtitles.observer_ambient": "therein lies your future",
+  "subtitles.smiley_ambient": "your time has come",
+  "subtitles.watcher_ambient": "behind you",
+
+  "dark_flame.bed.stopSleep": "You can't sleep right now. It hungers.",
+  "dark_flame.menu.noEscape": "§cerr.no_escape§r",
+  "dark_flame.singularity.disconnect": "one of us",
+  "dark_flame.no_consent.disconnect": "please accept to use this mod",
+
+  "gui.dark_flame.consent.title": "By clicking \"accept\" you \nagree to the following terms:",
+  "gui.dark_flame.consent.ip": "- Your IP address may be used \nto get your location",
+  "gui.dark_flame.consent.system_vars": "- System variables may be read \nto get your real name (windows)",
+  "gui.dark_flame.consent.outside_interaction": "- This mod may interact with your \ncomputer outside of Minecraft\n for more information, see\nhttps://github.com/QBicMC/DarkFlame",
+  "gui.dark_flame.consent.note": "Note: this data is shared with \nthe server, so make sure \nyou trust the server owner. \nIf not, activate streamer mode",
+  "gui.dark_flame.consent.tooltip_streamer_mode": "Activating streamer mode will hide your real name and location, using your minecraft name instead",
+  "gui.dark_flame.consent.tooltip_consent": "I consent to this data being used in the context of this mod",
+  "gui.dark_flame.consent.tooltip_exit": "Exit the game",
+  "gui.dark_flame.consent.button_cancel": "Cancel",
+  "gui.dark_flame.consent.button_accept": "Accept",
+  "gui.dark_flame.consent.streamer_mode": "Activate streamer mode"
 }

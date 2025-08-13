@@ -1,27 +1,25 @@
 package github.qbic.darkflame.client.renderer;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.model.geom.ModelPart;
-
-import github.qbic.darkflame.entity.SmileyEntity;
-import github.qbic.darkflame.client.model.animations.SmileyAnimation;
-import github.qbic.darkflame.client.model.ModelSmiley;
-
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import github.qbic.darkflame.client.model.SmileyModel;
+import github.qbic.darkflame.client.model.animations.SmileyAnimation;
+import github.qbic.darkflame.entity.SmileyEntity;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 
-public class SmileyRenderer extends MobRenderer<SmileyEntity, LivingEntityRenderState, ModelSmiley> {
+public class SmileyRenderer extends MobRenderer<SmileyEntity, LivingEntityRenderState, SmileyModel> {
 	private SmileyEntity entity = null;
 
 	public SmileyRenderer(EntityRendererProvider.Context context) {
-		super(context, new AnimatedModel(context.bakeLayer(ModelSmiley.LAYER_LOCATION)), 0.8f);
+		super(context, new AnimatedModel(context.bakeLayer(SmileyModel.LAYER_LOCATION)), 0.8f);
 		this.addLayer(new RenderLayer<>(this) {
 			final ResourceLocation LAYER_TEXTURE = ResourceLocation.parse("dark_flame:textures/entities/smiley.png");
 
@@ -52,7 +50,7 @@ public class SmileyRenderer extends MobRenderer<SmileyEntity, LivingEntityRender
 		return ResourceLocation.parse("dark_flame:textures/entities/smiley.png");
 	}
 
-	private static final class AnimatedModel extends ModelSmiley {
+	private static final class AnimatedModel extends SmileyModel {
 		private SmileyEntity entity = null;
 
 		public AnimatedModel(ModelPart root) {

@@ -4,9 +4,13 @@
   "package": "github.qbic.darkflame.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BedBlockMixin"
   ],
   "client": [
-    "client.FogRendererMixin"
+    "client.ClientTimeMixin",
+    "client.FogRendererMixin",
+    "client.PauseScreenMixin",
+    "client.accessor.PauseScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

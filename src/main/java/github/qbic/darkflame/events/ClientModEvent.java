@@ -1,7 +1,5 @@
-package github.qbic.darkflame.util;
+package github.qbic.darkflame.events;
 
-import github.qbic.darkflame.events.ModEvent;
-import github.qbic.darkflame.events.ModEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
@@ -24,5 +22,10 @@ public abstract class ClientModEvent extends ModEvent {
 
     public Minecraft minecraft() {
         return Minecraft.getInstance();
+    }
+
+    @Override
+    public String name() {
+        return clientEventID();
     }
 }
