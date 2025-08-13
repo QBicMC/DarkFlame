@@ -6,9 +6,8 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
 /**
- * Made with Blockbench 4.12.5
+ * Made with Blockbench 4.12.6
  * Exported for Minecraft version 1.19 or later with Mojang mappings
- * @author QBic
  */
 public class SingularityAnimation {
 	public static final AnimationDefinition spin = AnimationDefinition.Builder.withLength(2.0F).looping()
@@ -35,41 +34,41 @@ public class SingularityAnimation {
 		.build();
 
 	public static final AnimationDefinition consume = AnimationDefinition.Builder.withLength(1.0F)
-		.addAnimation("singularity", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-90.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle0", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(45.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle1", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(22.5F, 22.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle2", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, 45.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle3", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-24.1487F, 20.7048F, -9.0072F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle4", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-45.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle5", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-24.1487F, -20.7048F, 9.0072F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle6", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, -45.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.addAnimation("tentacle7", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
-			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(22.5F, -22.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
-		))
-		.build();
+			.addAnimation("singularity", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(-90.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle0", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(45.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle1", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(22.5F, 22.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle2", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, 45.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle3", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(-24.1487F, 20.7048F, -9.0072F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle4", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(-45.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle5", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(-24.1487F, -20.7048F, 9.0072F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle6", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, -45.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.addAnimation("tentacle7", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.0F, KeyframeAnimations.degreeVec(22.5F, -22.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+			))
+			.build();
 }

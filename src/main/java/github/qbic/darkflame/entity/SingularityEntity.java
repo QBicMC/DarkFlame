@@ -2,9 +2,9 @@ package github.qbic.darkflame.entity;
 
 import github.qbic.darkflame.Brain;
 import github.qbic.darkflame.client.model.animations.SingularityAnimation;
-import github.qbic.darkflame.entity.nav.goal.FollowTargetGoal;
-import github.qbic.darkflame.entity.nav.goal.LookAtTargetGoal;
 import github.qbic.darkflame.client.util.AnimationSequence;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -25,6 +25,11 @@ public class SingularityEntity extends HorrorEntity {
             .create(() -> true)
             .add(SingularityAnimation.spin_start, 0)
             .add(SingularityAnimation.spin, 76)
+            .build();
+
+    public final AnimationSequence siphonAnimation = AnimationSequence.Builder
+            .create(() -> isPlayerNear(this.blockPosition(), 25))
+            .add(SingularityAnimation.consume, 0)
             .build();
 
     public SingularityEntity(EntityType<SingularityEntity> type, Level level) {
@@ -78,6 +83,7 @@ public class SingularityEntity extends HorrorEntity {
     protected void onClientTick() {
         super.onClientTick();
         spinAnimation.onClientTick(this);
+        siphonAnimation.onClientTick(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -107,12 +113,25 @@ public class SingularityEntity extends HorrorEntity {
             Vec3 targetPos = target.position();
 
             Vec3 direction = targetPos.subtract(currentPos).normalize();
-            double speed = 0.25;
+            double speed = 0.33;
 
             this.setDeltaMovement(direction.scale(speed));
             this.hasImpulse = true;
         }
 
         this.noPhysics = true;
+    }
+
+    public static boolean isPlayerNear(BlockPos pos, double distance) {
+        Minecraft client = Minecraft.getInstance();
+        if (client.level == null) return false;
+
+        Vec3 center = Vec3.atCenterOf(pos);
+        for (AbstractClientPlayer player : client.level.players()) {
+            if (player.distanceToSqr(center) < distance * distance) {
+                return true;
+            }
+        }
+        return false;
     }
 }

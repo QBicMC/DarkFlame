@@ -81,10 +81,11 @@ public class SingularityRenderer extends MobRenderer<SingularityEntity, LivingEn
         public void setupAnim(LivingEntityRenderState state) {
             this.root().getAllParts().forEach(ModelPart::resetPose);
             entity.spinAnimation.onSetupAnim(this::animate, state);
+            entity.siphonAnimation.onSetupAnim(this::animate, state);
 
             Player target = Minecraft.getInstance().player;
             if (target != null) {
-                float entityYaw = entity.getYRot() * (float)(Math.PI / 180.0);
+                float entityYaw = entity.getYRot() * ((float)Math.PI / 180.0f);
 
                 double dx = target.getX() - entity.getX();
                 double dz = target.getZ() - entity.getZ();
@@ -97,8 +98,9 @@ public class SingularityRenderer extends MobRenderer<SingularityEntity, LivingEn
 
                 this.root().yRot = wrapRadians(absoluteYaw - entityYaw);
 
+                // account for singularity rotation
                 head.yRot = wrapRadians(absoluteYaw - (this.root().yRot + entityYaw));
-                head.xRot = -Mth.clamp(absolutePitch, -1.0f, 1.0f);
+                head.xRot = -wrapRadians(absolutePitch + singularity.xRot);
             }
 
             super.setupAnim(state);
