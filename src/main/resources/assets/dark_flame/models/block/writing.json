@@ -1,0 +1,9 @@
+{
+  "parent": "dark_flame:custom/writing",
+  "textures": {
+    "all": "dark_flame:block/writing",
+    "particle": "dark_flame:block/writing",
+    "0": "dark_flame:block/writing"
+  },
+  "render_type": "translucent"
+}

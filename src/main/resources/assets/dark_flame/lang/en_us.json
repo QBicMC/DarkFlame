@@ -1,0 +1,11 @@
+{
+  "item.dark_flame.smiley_spawn_egg": "Smiley Spawn Egg",
+  "entity.dark_flame.smiley": "Smiley",
+  "item.dark_flame.writing": "Writing",
+  "item.dark_flame.err_null": "err.null",
+  "item_group.dark_flame.dark_flame_tab": "Dark Flame",
+  "item.dark_flame.watcher_spawn_egg": "Watcher Spawn Egg",
+  "entity.dark_flame.watcher": "Watcher",
+  "item.dark_flame.observer_spawn_egg": "Watcher Spawn Egg",
+  "entity.dark_flame.observer": "Watcher"
+}

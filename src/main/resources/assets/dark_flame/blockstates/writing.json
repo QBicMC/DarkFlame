@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "dark_flame:block/writing"
+    },
+    "facing=east": {
+      "model": "dark_flame:block/writing",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "dark_flame:block/writing",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dark_flame:block/writing",
+      "y": 270
+    }
+  }
+}
