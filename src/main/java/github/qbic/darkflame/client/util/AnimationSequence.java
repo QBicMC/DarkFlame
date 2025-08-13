@@ -64,7 +64,10 @@ public class AnimationSequence {
         public Builder(Supplier<Boolean> play) {
             this.play = play;
         }
-        public static Builder create(Supplier<Boolean> play) { return new Builder(play); }
+
+        public static Builder create(Supplier<Boolean> play) {
+            return new Builder(play);
+        }
 
         public Builder add(AnimationDefinition animation, int startAtTick) {
             list.add(new Entry(new AnimationState(), animation, startAtTick));
