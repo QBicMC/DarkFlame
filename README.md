@@ -13,6 +13,7 @@ You can enable **Streamer Mode** in the config to hide your name and location.
 Dark Flame is not a virus, but it can:
 - Access your IP address to determine your location.
 - Read system variables, including your real name.
+- Read files from your photos folder
 - Interact with your computer outside of Minecraft (creating popups, files, opening applications).
 - Ban you from your world or render it permanently unusable.
 

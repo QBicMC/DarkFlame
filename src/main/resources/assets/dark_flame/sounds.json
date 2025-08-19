@@ -23,6 +23,22 @@
       }
     ]
   },
+  "base_blast": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/base_blast",
+        "stream": false
+      }
+    ]
+  },
+  "heartbeat": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/heartbeat",
+        "stream": false
+      }
+    ]
+  },
   "knocking": {
     "sounds": [
       {

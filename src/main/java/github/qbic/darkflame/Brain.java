@@ -1,7 +1,9 @@
 package github.qbic.darkflame;
 
+import github.qbic.darkflame.block.SummoningCircleBlock;
 import github.qbic.darkflame.events.EventSequence;
 import github.qbic.darkflame.events.ModEvents;
+import github.qbic.darkflame.init.ModBlocks;
 import github.qbic.darkflame.init.ModEntities;
 import github.qbic.darkflame.networking.C2S.PlayerInfoPayload;
 import github.qbic.darkflame.networking.ModVariables;
@@ -42,6 +44,12 @@ public class Brain {
         worldVars().started = true;
         syncWorldVars();
 
+        ServerLevel level = getLevel();
+
+        Util.getBlocksOfType(level, getTarget().blockPosition(), ModBlocks.SUMMONING_CIRCLE.get(), 50).forEach(pos -> {
+            ((SummoningCircleBlock) level.getBlockState(pos).getBlock()).activate(level, pos);
+        });
+
         Util.printDBG("starting");
 
         Player target = getTarget();
@@ -49,10 +57,8 @@ public class Brain {
 
         Util.broadcastMaster(target.level(), target.getX(), target.getY(), target.getZ(), "dark_flame:haggstrom_flatline");
         Util.schedule(() -> {
-            if (world instanceof ServerLevel level) {
                 level.setDayTime(17000);
                 ModEvents.DOWNLOAD_EVENT.execute();
-            }
         }, 1120, "set time to night");
     }
 

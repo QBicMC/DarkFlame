@@ -22,12 +22,15 @@ public class ModEntityRenderers {
 		event.registerEntityRenderer(ModEntities.WATCHER.get(), WatcherRenderer::new);
 		event.registerEntityRenderer(ModEntities.OBSERVER.get(), ObserverRenderer::new);
 		event.registerEntityRenderer(ModEntities.SKIN_WALKER.get(), SkinWalkerRenderer::new);
+		event.registerEntityRenderer(ModEntities.HEROBRINE.get(), HerobrineRenderer::new);
+		event.registerEntityRenderer(ModEntities.CORRUPTED.get(), CorruptedRenderer::new);
 		event.registerEntityRenderer(ModEntities.BEACON.get(), BeaconRenderer::new);
 		event.registerEntityRenderer(ModEntities.SINGULARITY.get(), SingularityRenderer::new);
 		event.registerEntityRenderer(ModEntities.FAKE_COW.get(), CowRenderer::new);
 		event.registerEntityRenderer(ModEntities.FAKE_CHICKEN.get(), ChickenRenderer::new);
 		event.registerEntityRenderer(ModEntities.FAKE_PIG.get(), PigRenderer::new);
 		event.registerEntityRenderer(ModEntities.FAKE_VILLAGER.get(), VillagerRenderer::new);
+		event.registerEntityRenderer(ModEntities.SMILER.get(), SmilerRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.INTRUSION_JUMPSCARE.get(), JumpscareRenderer::new);
 		event.registerEntityRenderer(ModEntities.EXCLUSION_JUMPSCARE.get(), JumpscareRenderer::new);

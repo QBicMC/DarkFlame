@@ -44,6 +44,14 @@ public class ModEntities {
 			EntityType.Builder.<SkinWalkerEntity>of(SkinWalkerEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(256).setUpdateInterval(3)
 					.sized(0.6f, 1.8f));
 
+	public static final DeferredHolder<EntityType<?>, EntityType<HerobrineEntity>> HEROBRINE = register("herobrine",
+			EntityType.Builder.<HerobrineEntity>of(HerobrineEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(256).setUpdateInterval(3)
+					.sized(0.6f, 1.8f));
+
+	public static final DeferredHolder<EntityType<?>, EntityType<CorruptedEntity>> CORRUPTED = register("corrupted",
+			EntityType.Builder.<CorruptedEntity>of(CorruptedEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(256).setUpdateInterval(3)
+					.sized(0.6f, 1.8f));
+
 	public static final DeferredHolder<EntityType<?>, EntityType<BeaconEntity>> BEACON = register("beacon",
 			EntityType.Builder.<BeaconEntity>of(BeaconEntity::new, MobCategory.MISC).setShouldReceiveVelocityUpdates(false).setTrackingRange(256).setUpdateInterval(3)
 					.sized(0.6f, 1.8f));
@@ -74,6 +82,10 @@ public class ModEntities {
 
 	public static final DeferredHolder<EntityType<?>, EntityType<ExclusionJumpscareEntity>> EXCLUSION_JUMPSCARE = register("exclusion_jumpscare",
 			EntityType.Builder.<ExclusionJumpscareEntity>of(ExclusionJumpscareEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(256).setUpdateInterval(3)
+					.sized(0.4f, 0.4f));
+
+	public static final DeferredHolder<EntityType<?>, EntityType<SmilerEntity>> SMILER = register("smiler",
+			EntityType.Builder.<SmilerEntity>of(SmilerEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(256).setUpdateInterval(3)
 					.sized(0.6f, 1.8f));
 
 	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
@@ -86,6 +98,8 @@ public class ModEntities {
 		event.put(WATCHER.get(), WatcherEntity.createAttributes().build());
 		event.put(OBSERVER.get(), ObserverEntity.createAttributes().build());
 		event.put(SKIN_WALKER.get(), SkinWalkerEntity.createAttributes().build());
+		event.put(HEROBRINE.get(), HerobrineEntity.createAttributes().build());
+		event.put(CORRUPTED.get(), CorruptedEntity.createAttributes().build());
 		event.put(BEACON.get(), BeaconEntity.createAttributes().build());
 		event.put(SINGULARITY.get(), SingularityEntity.createAttributes().build());
 		event.put(FAKE_COW.get(), FakeCow.createAttributes().build());
@@ -94,5 +108,6 @@ public class ModEntities {
 		event.put(FAKE_VILLAGER.get(), Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.3).build());
 		event.put(INTRUSION_JUMPSCARE.get(), IntrusionJumpscareEntity.createAttributes().build());
 		event.put(EXCLUSION_JUMPSCARE.get(), ExclusionJumpscareEntity.createAttributes().build());
+		event.put(SMILER.get(), SmilerEntity.createAttributes().build());
 	}
 }

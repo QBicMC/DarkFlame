@@ -3,12 +3,11 @@ package github.qbic.darkflame.events;
 import github.qbic.darkflame.events.buildup.*;
 import github.qbic.darkflame.events.client.ApplyShaderEvent;
 import github.qbic.darkflame.events.client.ChangeWindowEvent;
+import github.qbic.darkflame.events.client.IAMINYOURSYSTEMEventClient;
 import github.qbic.darkflame.events.client.SingularityAttackClient;
+import github.qbic.darkflame.events.dimension.hallways.HallwaysSpawnHerobrineEvent;
 import github.qbic.darkflame.events.jumpscares.SingularityAttack;
-import github.qbic.darkflame.events.major.SpawnActiveEntityEvent;
-import github.qbic.darkflame.events.major.SpawnFakeMobEvent;
-import github.qbic.darkflame.events.major.SpawnSingularityEvent;
-import github.qbic.darkflame.events.major.SpawnSmileyBehindEvent;
+import github.qbic.darkflame.events.major.*;
 import github.qbic.darkflame.events.minor.DamagePlayerEvent;
 import github.qbic.darkflame.events.minor.SignEvent;
 import github.qbic.darkflame.events.minor.PullDownEvent;
@@ -51,6 +50,11 @@ public final class ModEvents {
     public static final BlockDoorEvent BLOCK_DOOR_EVENT = new BlockDoorEvent();
     public static final JumpMessageEvent JUMP_MESSAGE_EVENT = new JumpMessageEvent();
     public static final SignEvent SIGN_EVENT = new SignEvent();
+    public static final ReplaceTorchEvent REPLACE_TORCH_EVENT = new ReplaceTorchEvent();
+    public static final IAMINYOURSYSTEMActivatorEvent IAMINYOURSYSTEM_EVENT = new IAMINYOURSYSTEMActivatorEvent();
+
+    // dimension-specific
+    public static final HallwaysSpawnHerobrineEvent HALLWAYS_SPAWN_HEROBRINE_EVENT = new HallwaysSpawnHerobrineEvent();
 
     public static final BlankEvent BLANK = new BlankEvent();
 
@@ -61,4 +65,5 @@ public final class ModEvents {
     public static final ApplyShaderEvent APPLY_SHADER_EVENT = new ApplyShaderEvent();
     public static final ChangeWindowEvent CHANGE_WINDOW_EVENT = new ChangeWindowEvent();
     public static final SingularityAttackClient SINGULARITY_ATTACK_CLIENT_EVENT = new SingularityAttackClient();
+    public static final IAMINYOURSYSTEMEventClient IAMINYOURSYSTEM_CLIENT_EVENT = new IAMINYOURSYSTEMEventClient();
 }

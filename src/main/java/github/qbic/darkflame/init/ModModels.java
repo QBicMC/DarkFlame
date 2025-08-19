@@ -3,10 +3,7 @@
  */
 package github.qbic.darkflame.init;
 
-import github.qbic.darkflame.client.model.BlankModel;
-import github.qbic.darkflame.client.model.SingularityModel;
-import github.qbic.darkflame.client.model.SmileyModel;
-import github.qbic.darkflame.client.model.SimpleHumanoidModel;
+import github.qbic.darkflame.client.model.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,5 +18,6 @@ public class ModModels {
 		event.registerLayerDefinition(SimpleHumanoidModel.LAYER_LOCATION, SimpleHumanoidModel::createBodyLayer);
 		event.registerLayerDefinition(SingularityModel.LAYER_LOCATION, SingularityModel::createBodyLayer);
 		event.registerLayerDefinition(BlankModel.LAYER_LOCATION, BlankModel::createBodyLayer);
+		event.registerLayerDefinition(SmilerModel.LAYER_LOCATION, SmilerModel::createBodyLayer);
 	}
 }

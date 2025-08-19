@@ -91,6 +91,17 @@ public abstract class HorrorEntity extends Monster {
         return false;
     }
 
+    @Nullable
+    protected Player getNearestPlayer(double maxDistance) {
+        Level level = this.level();
+
+        return level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), maxDistance, false);
+    }
+
+    protected boolean isPlayerInRange(double range) {
+        return getNearestPlayer(range) != null;
+    }
+
     @Override
     public boolean hurtServer(ServerLevel level, DamageSource damagesource, float amount) {
 

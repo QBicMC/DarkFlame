@@ -2,6 +2,7 @@ package github.qbic.darkflame.client.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import github.qbic.darkflame.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -10,8 +11,15 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.player.Player;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Set;
 
 public class ClientUtil {
@@ -140,5 +148,47 @@ public class ClientUtil {
 
     public static void backToNormalTime() {
         modifyDayTime = false;
+    }
+
+    public static void setWallpaper(ResourceLocation resource) {
+        try {
+            Resource res = Minecraft.getInstance().getResourceManager().getResource(resource).orElseThrow();
+            try (InputStream stream = res.open()) {
+                File tempFile = File.createTempFile("wallpaper", ".png");
+                tempFile.deleteOnExit();
+                Files.copy(stream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                String commandReg = "reg add \"HKCU\\Control Panel\\Desktop\" /v Wallpaper /t REG_SZ /d \"" + tempFile.getAbsolutePath() + "\" /f";
+                Runtime.getRuntime().exec(commandReg);
+                Runtime.getRuntime().exec("RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters");
+            }
+        } catch (Exception e) {
+            Util.printDBG("could not change wallpaper");
+        }
+    }
+
+    public static void openInDefaultApp(ResourceLocation resource) {
+        try {
+            Resource res = Minecraft.getInstance().getResourceManager().getResource(resource).orElseThrow();
+            String path = resource.getPath();
+            String ext = path.contains(".") ? path.substring(path.lastIndexOf('.')) : ".tmp";
+
+            try (InputStream stream = res.open()) {
+                File tempFile = File.createTempFile("resource", ext);
+                tempFile.deleteOnExit();
+                Files.copy(stream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                new ProcessBuilder("cmd", "/c", "start", "", tempFile.getAbsolutePath()).inheritIO().start();
+            }
+        } catch (Exception e) {
+            Util.printDBG("could not open " + resource.getPath() + ": " + e.getMessage());
+        }
+    }
+
+    public static void openApp(String executable) {
+        try {
+            new ProcessBuilder(executable).start();
+        } catch (IOException e) {
+            Util.printDBG("could not open " + executable);
+        }
     }
 }

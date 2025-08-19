@@ -6,6 +6,7 @@ import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 public class SpawnVillagerInAirEvent extends ModEvent {
     @Override
@@ -17,7 +18,8 @@ public class SpawnVillagerInAirEvent extends ModEvent {
     public void execute() {
         Player target = Brain.getTarget();
         BlockPos spawnPos = Util.randomAirPosBehindPlayer(target.level(), target, 32, 32);
-        Util.spawnEntityAt(spawnPos, target.level(), EntityType.VILLAGER, true);
+        if (spawnPos == null) return;
+        Util.spawnEntityAt(new Vec3(spawnPos), target.level(), EntityType.VILLAGER, true);
     }
 
     @Override

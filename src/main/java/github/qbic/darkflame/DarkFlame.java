@@ -20,8 +20,11 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingException;
+import net.neoforged.fml.ModLoadingIssue;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -32,6 +35,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.print.attribute.standard.Severity;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -42,6 +46,8 @@ public class DarkFlame {
     public static final boolean DEBUG = true;
 
     public DarkFlame(IEventBus modEventBus, ModContainer modContainer) {
+        if (FMLEnvironment.dist.isClient()) checkOS();
+
         NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::registerNetworking);
 
@@ -89,6 +95,20 @@ public class DarkFlame {
         TestCommand.addTest("name_sign", ModEvents.SIGN_WITH_NAME_EVENT::execute, TestCommand.Side.SERVER);
         TestCommand.addTest("block_door", ModEvents.BLOCK_DOOR_EVENT::execute, TestCommand.Side.SERVER);
         TestCommand.addTest("sign", ModEvents.SIGN_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("in_your_system", ModEvents.IAMINYOURSYSTEM_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("spawn_herobrine", ModEvents.HALLWAYS_SPAWN_HEROBRINE_EVENT::execute, TestCommand.Side.SERVER);
+    }
+
+    private void checkOS() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (!os.contains("win")) {
+            ModLoadingIssue issue = new ModLoadingIssue(
+                    ModLoadingIssue.Severity.ERROR,
+                    "DarkFlame only supports Windows client-side!",
+                    Collections.emptyList()
+            );
+            throw new ModLoadingException(issue);
+        }
     }
 
     private static boolean networkingRegistered = false;

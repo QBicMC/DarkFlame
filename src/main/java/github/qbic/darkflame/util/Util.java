@@ -19,6 +19,7 @@ import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -33,6 +34,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.AABB;
@@ -211,6 +214,12 @@ public class Util {
         broadcastMasterTo(player, holder);
     }
 
+    //SERVER ONLY
+    public static void broadcastMasterToFor(ServerPlayer player, String sound, int ticks) {
+        broadcastMasterTo(player, sound);
+        schedule(() -> stopAllSounds(player), ticks, "stop sounds");
+    }
+
     // SERVER ONLY
     public static void broadcastToNoStop(ServerPlayer player, String sound) {
         ResourceLocation soundLocation;
@@ -294,14 +303,14 @@ public class Util {
     }
 
     public static Entity spawnEntityAt(BlockPos pos, Level level, EntityType<? extends Entity> type) {
-        return spawnEntityAt(pos, level, type, false);
+        return spawnEntityAt(new Vec3(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5), level, type, false);
     }
 
-    public static Entity spawnEntityAt(BlockPos pos, Level level, EntityType<? extends Entity> type, boolean noAi) {
+    public static Entity spawnEntityAt(Vec3 pos, Level level, EntityType<? extends Entity> type, boolean noAi) {
         Entity entity = type.create(level, EntitySpawnReason.TRIGGERED);
 
         if (entity != null) {
-            entity.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            entity.setPos(pos.x, pos.y, pos.z);
 
             if (noAi) {
                 entity.setNoGravity(true);
@@ -561,14 +570,14 @@ public class Util {
 
                 if (hit.getType() == HitResult.Type.BLOCK) {
                     BlockPos spawnPos = BlockPos.containing(hit.getLocation()).above();
-                    spawnEntityAt(spawnPos, level, type, false);
+                    spawnEntityAt(spawnPos, level, type);
                     return;
                 }
             } else {
                 for (int i = 1; i <= verticalSearch + 3; i++) {
                     BlockPos above = basePos.above(i);
                     if (level.getBlockState(above).isAir()) {
-                        spawnEntityAt(above, level, type, false);
+                        spawnEntityAt(above, level, type);
                         return;
                     }
                 }
@@ -610,6 +619,40 @@ public class Util {
             return dimensionKey.location().getNamespace().equals("minecraft") || dimensionKey.location().getNamespace().equals("neoforge");
         }
         return false;
+    }
+
+    public static void teleportToSpawn(ServerPlayer player) {
+        MinecraftServer server = player.server;
+        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        if (overworld == null) return;
+
+        BlockPos spawn = overworld.getSharedSpawnPos();
+        BlockPos offset = spawn.offset(15, 0, 0);
+
+        int surfaceY = overworld.getHeight(Heightmap.Types.MOTION_BLOCKING, offset.getX(), offset.getZ());
+        BlockPos surfacePos = new BlockPos(offset.getX(), surfaceY, offset.getZ());
+
+        player.teleportTo(
+                overworld,
+                surfacePos.getX() + 0.5,
+                surfacePos.getY(),
+                surfacePos.getZ() + 0.5,
+                Collections.emptySet(),
+                player.getYRot(),
+                player.getXRot(),
+                true
+        );
+    }
+
+    public static ServerPlayer getRandomPlayerInDimension(ServerLevel level) {
+        List<ServerPlayer> players = level.players();
+        if (players.isEmpty()) return null;
+        return players.get(level.random.nextInt(players.size()));
+    }
+
+    public static Vec3 getPosInFront(ServerPlayer player, double distance) {
+        Vec3 look = player.getLookAngle();
+        return player.position().add(look.x * distance, 0, look.z * distance);
     }
 
     public static class Scheduler {
@@ -680,5 +723,25 @@ public class Util {
             }
             scheduleClient.removeAll(toRemove);
         }
+    }
+
+    public static List<BlockPos> getBlocksOfType(Level world, BlockPos center, Block targetBlock, int radius) {
+        List<BlockPos> matches = new ArrayList<>();
+
+        int rSquared = radius * radius;
+
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    BlockPos currentPos = center.offset(dx, dy, dz);
+                    if (center.distSqr(currentPos) <= rSquared &&
+                            world.getBlockState(currentPos).is(targetBlock)) {
+                        matches.add(currentPos.immutable());
+                    }
+                }
+            }
+        }
+
+        return matches;
     }
 }
