@@ -27,6 +27,6 @@ public class SpawnFakeMobEvent extends ModEvent {
 
     @Override
     public String name() {
-        return "";
+        return "fake_mob";
     }
 }

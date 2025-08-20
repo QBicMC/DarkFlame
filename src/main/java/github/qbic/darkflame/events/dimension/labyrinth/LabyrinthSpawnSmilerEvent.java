@@ -13,7 +13,7 @@ public class LabyrinthSpawnSmilerEvent extends ModEvent {
 
     @Override
     public void execute() {
-        SmilerEntity.Spawner.spawnAround(Util.getRandomPlayerInDimension(target().getServer().getLevel(Util.createDimResourceKey("the_hallways"))));
+        SmilerEntity.Spawner.spawnAround(Util.getRandomPlayerInDimension(target().getServer().getLevel(Util.createDimResourceKey("labyrinth"))));
 
     }
 

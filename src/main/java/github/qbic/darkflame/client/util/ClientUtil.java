@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.player.Player;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +57,14 @@ public class ClientUtil {
         posY = y;
         width = w;
         height = h;
+    }
+
+    public static void setImageFullscreen(ResourceLocation tex) { // assumes 1280 x 720
+        currentImage = tex;
+        posX = 0;
+        posY = 0;
+        width = 1280;
+        height = 720;
     }
 
     public static void clearImage() {

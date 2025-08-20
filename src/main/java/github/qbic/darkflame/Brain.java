@@ -69,7 +69,7 @@ public class Brain {
         ticks++;
 
         if (ticks % 1200 == 0) {
-            BaseScanner.scanForBase((ServerLevel) target.level(), (ServerPlayer) target, 20, 5);
+//            BaseScanner.scanForBase((ServerLevel) target.level(), (ServerPlayer) target, 20, 5);
             starePosition = getTarget().position();
         }
 

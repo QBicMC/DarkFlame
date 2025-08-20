@@ -6,11 +6,10 @@ import github.qbic.darkflame.events.client.ChangeWindowEvent;
 import github.qbic.darkflame.events.client.IAMINYOURSYSTEMEventClient;
 import github.qbic.darkflame.events.client.SingularityAttackClient;
 import github.qbic.darkflame.events.dimension.hallways.HallwaysSpawnHerobrineEvent;
+import github.qbic.darkflame.events.dimension.labyrinth.LabyrinthSpawnSmilerEvent;
 import github.qbic.darkflame.events.jumpscares.SingularityAttack;
 import github.qbic.darkflame.events.major.*;
-import github.qbic.darkflame.events.minor.DamagePlayerEvent;
-import github.qbic.darkflame.events.minor.SignEvent;
-import github.qbic.darkflame.events.minor.PullDownEvent;
+import github.qbic.darkflame.events.minor.*;
 import github.qbic.darkflame.util.StringClientModEvent;
 
 import java.util.ArrayList;
@@ -52,9 +51,16 @@ public final class ModEvents {
     public static final SignEvent SIGN_EVENT = new SignEvent();
     public static final ReplaceTorchEvent REPLACE_TORCH_EVENT = new ReplaceTorchEvent();
     public static final IAMINYOURSYSTEMActivatorEvent IAMINYOURSYSTEM_EVENT = new IAMINYOURSYSTEMActivatorEvent();
+    public static final MineNextToEvent MINE_NEXT_TO_EVENT = new MineNextToEvent();
+    public static final LightningStrikeCircleEvent LIGHTNING_STRIKE_CIRCLE_EVENT = new LightningStrikeCircleEvent();
+    public static final MessageDisplayEvent MESSAGE_DISPLAY_EVENT = new MessageDisplayEvent();
+    public static final FlickerEvent FLICKER_EVENT = new FlickerEvent();
+    public static final GivePlayerItemEvent GIVE_PLAYER_ITEM_EVENT = new GivePlayerItemEvent();
+    public static final BreakLightSourcesEvent BREAK_LIGHT_SOURCES_EVENT = new BreakLightSourcesEvent();
 
     // dimension-specific
     public static final HallwaysSpawnHerobrineEvent HALLWAYS_SPAWN_HEROBRINE_EVENT = new HallwaysSpawnHerobrineEvent();
+    public static final LabyrinthSpawnSmilerEvent LABYRINTH_SPAWN_SMILER_EVENT = new LabyrinthSpawnSmilerEvent();
 
     public static final BlankEvent BLANK = new BlankEvent();
 

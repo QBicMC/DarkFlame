@@ -1,7 +1,6 @@
 package github.qbic.darkflame.entity;
 
 import github.qbic.darkflame.client.util.ClientUtil;
-import github.qbic.darkflame.entity.nav.goal.ChaseEntityGoal;
 import github.qbic.darkflame.entity.nav.goal.LookAtTargetGoal;
 import github.qbic.darkflame.init.ModEntities;
 import github.qbic.darkflame.networking.S2C.SetOverlayPayload;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class SmilerEntity extends HorrorEntity {
@@ -109,11 +107,11 @@ public class SmilerEntity extends HorrorEntity {
             if (blackoutTimer > 0) {
                 blackoutTimer--;
             } else {
-                ClientUtil.setImage(ResourceLocation.parse("dark_flame:textures/img/smiler/red.png"), 0, 0, 1280, 720);
+                ClientUtil.setImageFullscreen(ResourceLocation.parse("dark_flame:textures/img/smiler/red.png"));
 
                 if (Util.gamble(0.01 * ((50 - distance) / 10))) {
                     blackoutTimer = 10;
-                    ClientUtil.setImage(ResourceLocation.parse("dark_flame:textures/img/smiler/blackout.png"), 0, 0, 1280, 720);
+                    ClientUtil.setImageFullscreen(ResourceLocation.parse("dark_flame:textures/img/smiler/blackout.png"));
                 }
             }
         }

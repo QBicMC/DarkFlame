@@ -42,4 +42,8 @@ public record SetOverlayPayload(String resourceLocation, int x, int y, int width
     public static void send(Player player, String id, int x, int y, int width, int height, int ticks) {
         PacketDistributor.sendToPlayer((ServerPlayer) player, new SetOverlayPayload(id, x, y, width, height, ticks));
     }
+
+    public static void send(Player player, String id, int ticks) {
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new SetOverlayPayload(id, 0, 0, 1280, 720, ticks));
+    }
 }

@@ -7,6 +7,7 @@ import github.qbic.darkflame.events.ModEvents;
 import github.qbic.darkflame.init.ModParticleTypes;
 import github.qbic.darkflame.util.StructureUtil;
 import github.qbic.darkflame.util.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -70,6 +71,7 @@ public class PlayerTickListener {
 
             } else if (dim.equals(Util.createDimResourceKey("the_hallways"))) {
                 sPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
+                // you will die if you dont have a spawn point
             }
         }
 
@@ -91,6 +93,37 @@ public class PlayerTickListener {
 
             if (hit.getType() == HitResult.Type.MISS) {
                 ModEvents.JUMP_MESSAGE_EVENT.executeIfUsable();
+            }
+        }
+
+        if (
+                sPlayer.level() == sPlayer.server.getLevel(Util.createDimResourceKey("labyrinth"))
+                        && tickCounter % 20 == 0
+        ) {
+            if (Util.gamble(0.002)) { // avg 8 min
+                ModEvents.LABYRINTH_SPAWN_SMILER_EVENT.execute();
+            }
+
+            if (Util.gamble(0.008)) {
+                Util.playCaveNoise(sPlayer);
+            }
+
+            if (Util.gamble(0.004)) {
+                Vec3 pos = Util.getPosInFront(sPlayer, -1);
+                Util.playSound(level, pos.x, pos.y, pos.z, "dark_flame:labyrinth_ambient");
+            }
+        }
+
+        if (
+                sPlayer.level() == sPlayer.server.getLevel(Util.createDimResourceKey("the_hallways"))
+                        && tickCounter % 20 == 0
+        ) {
+            if (Util.gamble(0.003)) {
+                ModEvents.HALLWAYS_SPAWN_HEROBRINE_EVENT.execute();
+            }
+
+            if (Util.gamble(0.009)) {
+                Util.playCaveNoise(sPlayer);
             }
         }
     }

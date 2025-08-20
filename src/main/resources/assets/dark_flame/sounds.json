@@ -31,6 +31,14 @@
       }
     ]
   },
+  "guardian_spotted": {
+    "sounds": [
+      {
+        "name": "dark_flame:sfx/guardian/guardian_spotted",
+        "stream": false
+      }
+    ]
+  },
   "heartbeat": {
     "sounds": [
       {
@@ -255,6 +263,58 @@
     "sounds": [
       {
         "name": "dark_flame:sfx/overlay/static_overlay0",
+        "stream": false
+      }
+    ]
+  },
+  "megalophobia_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/dims/megalophobia/megalophobia_ambient0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/megalophobia/megalophobia_ambient1",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/megalophobia/megalophobia_ambient2",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/megalophobia/megalophobia_ambient3",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/megalophobia/megalophobia_ambient4",
+        "stream": false
+      }
+    ]
+  },
+  "labyrinth_ambient": {
+    "sounds": [
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient0",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient1",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient2",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient3",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient4",
+        "stream": false
+      },
+      {
+        "name": "dark_flame:ambient/dims/labyrinth/labyrinth_ambient5",
         "stream": false
       }
     ]
