@@ -7,6 +7,7 @@ import github.qbic.darkflame.init.*;
 import github.qbic.darkflame.networking.ModVariables;
 import github.qbic.darkflame.networking.S2C.VolumePayload;
 import github.qbic.darkflame.util.TestCommand;
+import github.qbic.darkflame.util.Util;
 import github.qbic.darkflame.util.compat.CompatUtils;
 import github.qbic.darkflame.util.voicechat.filters.BlankEffect;
 import net.minecraft.core.registries.Registries;
@@ -43,7 +44,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class DarkFlame {
     public static final Logger LOGGER = LogManager.getLogger(DarkFlame.class);
     public static final String MOD_ID = "dark_flame";
-    public static final boolean DEBUG = true;
+    public static boolean DEBUG = true;
 
     public DarkFlame(IEventBus modEventBus, ModContainer modContainer) {
         if (FMLEnvironment.dist.isClient()) checkOS();
@@ -97,6 +98,14 @@ public class DarkFlame {
         TestCommand.addTest("sign", ModEvents.SIGN_EVENT::execute, TestCommand.Side.SERVER);
         TestCommand.addTest("in_your_system", ModEvents.IAMINYOURSYSTEM_EVENT::execute, TestCommand.Side.SERVER);
         TestCommand.addTest("spawn_herobrine", ModEvents.HALLWAYS_SPAWN_HEROBRINE_EVENT::execute, TestCommand.Side.SERVER);
+        TestCommand.addTest("ticks", () -> Util.printDBG(String.valueOf(Brain.ticks)), TestCommand.Side.SERVER);
+        TestCommand.addTest("half_days", () -> Util.printDBG(String.valueOf(Brain.worldVars().halfDays)), TestCommand.Side.SERVER);
+        TestCommand.addTest("toggle_debug", () -> {
+            boolean pdbg = DEBUG;
+            DEBUG = true;
+            Util.printDBG("DEBUG is now set to: " + !pdbg);
+            DEBUG = !pdbg;
+        }, TestCommand.Side.BOTH);
     }
 
     private void checkOS() {

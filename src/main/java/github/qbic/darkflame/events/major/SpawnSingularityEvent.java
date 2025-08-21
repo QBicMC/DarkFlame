@@ -1,9 +1,11 @@
 package github.qbic.darkflame.events.major;
 
+import github.qbic.darkflame.Brain;
 import github.qbic.darkflame.events.ModEvent;
 import github.qbic.darkflame.events.ModEvents;
 import github.qbic.darkflame.events.client.SingularityAttackClient;
 import github.qbic.darkflame.init.ModEntities;
+import github.qbic.darkflame.networking.ModVariables;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -30,5 +32,13 @@ public class SpawnSingularityEvent extends ModEvent {
     @Override
     public String name() {
         return "spawn_singularity";
+    }
+
+    @Override
+    public boolean canUse() {
+        ModVariables.WorldVariables vars = Brain.worldVars();
+        if (vars == null) return false;
+
+        return vars.halfDays > 8;
     }
 }

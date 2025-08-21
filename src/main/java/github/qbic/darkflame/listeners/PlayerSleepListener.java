@@ -6,7 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 
 @EventBusSubscriber
-public class PlayerSleepEvent {
+public class PlayerSleepListener {
 
     @SubscribeEvent
     public static void onPlayerInBed(CanPlayerSleepEvent event) {

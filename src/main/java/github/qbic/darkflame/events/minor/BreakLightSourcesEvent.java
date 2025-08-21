@@ -40,6 +40,6 @@ public class BreakLightSourcesEvent extends ModEvent {
 
     @Override
     public String name() {
-        return "";
+        return "lights_out";
     }
 }

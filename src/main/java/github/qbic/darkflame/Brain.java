@@ -3,6 +3,7 @@ package github.qbic.darkflame;
 import github.qbic.darkflame.block.SummoningCircleBlock;
 import github.qbic.darkflame.events.EventSequence;
 import github.qbic.darkflame.events.ModEvents;
+import github.qbic.darkflame.events.major.SpawnFakeMobEvent;
 import github.qbic.darkflame.init.ModBlocks;
 import github.qbic.darkflame.init.ModEntities;
 import github.qbic.darkflame.networking.C2S.PlayerInfoPayload;
@@ -24,6 +25,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Brain {
     private static final Random RANDOM = new Random(69420);
@@ -34,6 +36,8 @@ public class Brain {
     public static double anger = 0.0;
     private static Vec3 starePosition = Vec3.ZERO;
     private static Map<UUID, PlayerInfoPayload> playerInfo = new HashMap<>();
+    private static int spawnTimer = 0;
+    private static int spawnCooldown = 12000;
 
     public static void init() {
         target = getNewTarget();
@@ -55,6 +59,7 @@ public class Brain {
         Player target = getTarget();
         LevelAccessor world = target.level();
 
+        Util.stopAllSounds((ServerPlayer) target);
         Util.broadcastMaster(target.level(), target.getX(), target.getY(), target.getZ(), "dark_flame:haggstrom_flatline");
         Util.schedule(() -> {
                 level.setDayTime(17000);
@@ -86,12 +91,18 @@ public class Brain {
             getNewActiveEntity();
         }
 
-        if (ticks % 24000 / dailyEventSequences == 0) {
+        if (ticks % (24000 / dailyEventSequences) == 0) {
             triggerEventSequence();
         }
 
         if (ticks % 24000 == 0) {
-            dailyEventSequences = (int) (worldVars().anger * 2) + 1;
+            dailyEventSequences = (int) (worldVars().anger * 3) + 1;
+        }
+
+        if (++spawnTimer >= spawnCooldown) {
+            ModEvents.SPAWN_FAKE_MOB_EVENT.execute();
+            spawnCooldown = ThreadLocalRandom.current().nextInt(12000, 72000);
+            spawnTimer = 0;
         }
 
         //non-random event checks
@@ -151,7 +162,6 @@ public class Brain {
         if (players.isEmpty()) return null;
 
         Player _new = players.get(RANDOM.nextInt(players.size()));
-        Util.printDBG("new target: " + _new.getName().getString());
         target = _new;
         return _new;
     }

@@ -13,5 +13,10 @@ public class ServerTickListener {
     public static void onServerTick(ServerTickEvent.Post event) {
         Brain.tickServer();
         Util.Scheduler.update();
+        if (Util.gamble(0.01)) {
+            Brain.worldVars().anger -= 0.003;
+            if (Brain.worldVars().anger < 0.0) Brain.worldVars().anger = 0.0;
+            Brain.syncWorldVars();
+        }
     }
 }

@@ -36,6 +36,8 @@ public class ChunkLoadedListener {
         LevelChunk chunk = event.getChunk();
         if (event.getLevel().isClientSide()) return;
 
+        if (!Brain.worldVars().started) return;
+
         ServerLevel level = (ServerLevel) chunk.getLevel();
         Random rand = new Random();
         ServerPlayer player = (ServerPlayer) Brain.getTarget();
@@ -57,7 +59,7 @@ public class ChunkLoadedListener {
             Util.printDBG("moving %d blocks in chunk", movedPerChunk);
         }
 
-        if (event.isNewChunk() && Util.gamble(0.005)) {
+        if (event.isNewChunk() && Util.gamble(0.007)) {
             chunkError(chunk);
             return;
         }
@@ -99,6 +101,7 @@ public class ChunkLoadedListener {
                         if (newPos.getY() >= level.getMaxY()) break;
 
                         if (chunk.getBlockState(newPos).isAir()) {
+                            if (!chunk.getBlockState(pos).getFluidState().isEmpty() && Util.gamble(0.999)) break;
                             chunk.setBlockState(newPos, state, false);
                             chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), false);
                             break;
@@ -115,31 +118,18 @@ public class ChunkLoadedListener {
     public static void chunkError(ChunkAccess chunk) {
         Block block;
         BlockState state = null;
-        int roll = (int) (Math.random() * 15) + 1;
-        switch (roll) {
-            case 1, 2, 3, 11, 12, 13, 14, 15:
-                block = Blocks.AIR;
-                break;
-            case 4, 5:
-                block = Blocks.STONE;
-                break;
-            case 6, 7:
-//                block = Blocks.BIRCH_SIGN;
-//                state = SignUtil.getSign(Blocks.BIRCH_SIGN); //too laggy
-                block = Blocks.NETHERRACK;
-                break;
-            case 8:
-                block = Blocks.BEDROCK;
-                break;
-            case 9:
-                block = Blocks.COMMAND_BLOCK;
-                break;
-            case 10:
-                block = Blocks.BLACK_CONCRETE;
-                break;
-            default:
-                block = Blocks.AIR;
-                break;
+        int roll = (int) (Math.random() * 10) + 1;
+        if (Util.gamble(0.7)) {
+            block = Blocks.AIR;
+        } else {
+            block = switch (roll) {
+                case 1, 2, 3 -> Blocks.STONE;
+                case 4, 5 -> Blocks.NETHERRACK;
+                case 6, 7 -> Blocks.BEDROCK;
+                case 8 -> Blocks.COMMAND_BLOCK;
+                case 9, 10 -> Blocks.BLACK_CONCRETE;
+                default -> Blocks.AIR;
+            };
         }
 
         state = block.defaultBlockState();

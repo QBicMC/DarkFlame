@@ -3,6 +3,7 @@ package github.qbic.darkflame.events.major;
 import github.qbic.darkflame.Brain;
 import github.qbic.darkflame.events.ModEvent;
 import github.qbic.darkflame.init.ModEntities;
+import github.qbic.darkflame.networking.ModVariables;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -35,5 +36,13 @@ public class SpawnSmileyBehindEvent extends ModEvent {
     @Override
     public String name() {
         return "spawn_smiley";
+    }
+
+    @Override
+    public boolean canUse() {
+        ModVariables.WorldVariables vars = Brain.worldVars();
+        if (vars == null) return false;
+
+        return vars.halfDays > 7;
     }
 }

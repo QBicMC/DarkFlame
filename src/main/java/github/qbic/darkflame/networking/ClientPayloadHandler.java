@@ -3,7 +3,7 @@ package github.qbic.darkflame.networking;
 import github.qbic.darkflame.ClientBrain;
 import github.qbic.darkflame.DarkFlame;
 import github.qbic.darkflame.events.ModEvents;
-import github.qbic.darkflame.listeners.ClientEvents;
+import github.qbic.darkflame.listeners.ClientListeners;
 import github.qbic.darkflame.networking.S2C.*;
 import github.qbic.darkflame.util.Util;
 import net.minecraft.client.Minecraft;
@@ -33,9 +33,9 @@ public class ClientPayloadHandler {
 
     public static void handleSetOverlayData(final SetOverlayPayload data, final IPayloadContext context) {
         if (data.ticks() == 0) {
-            ClientEvents.setImage(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "textures/img/" + data.resourceLocation()), data.x(), data.y(), data.width(), data.height());
+            ClientListeners.setImage(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "textures/img/" + data.resourceLocation()), data.x(), data.y(), data.width(), data.height());
         } else {
-            ClientEvents.setImageForTime(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "textures/img/" + data.resourceLocation()), data.x(), data.y(), data.width(), data.height(), data.ticks());
+            ClientListeners.setImageForTime(ResourceLocation.fromNamespaceAndPath(DarkFlame.MOD_ID, "textures/img/" + data.resourceLocation()), data.x(), data.y(), data.width(), data.height(), data.ticks());
         }
     }
 

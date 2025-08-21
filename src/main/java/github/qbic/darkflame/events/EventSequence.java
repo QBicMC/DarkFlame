@@ -73,7 +73,7 @@ public record EventSequence(List<ModEvent> buildup, List<ModEvent> minor, ModEve
         ModVariables.WorldVariables vars = Brain.worldVars();
         if (vars == null) return blank;
 
-        if (vars.halfDays > 3) return create(buildupEvts, minorEvts, true);
+        if (vars.halfDays > 5) return create(buildupEvts, minorEvts, true);
         return create(buildupEvts, minorEvts, false);
     }
 }

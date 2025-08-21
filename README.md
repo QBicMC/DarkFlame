@@ -20,6 +20,11 @@ Dark Flame is not a virus, but it can:
 **Important:** Make backups of any worlds you care about before playing.  
 This mod is intended for experienced players who fully understand and accept these risks.
 
+## Information - Recommended Before You Play
+The mod does not start to do anything until you find a summoning circle structure,
+these can be found in forests and sometimes plains.
+After finding one, your world will begin to corrupt and strange things will happen...
+
 <div style="display: flex; overflow-x: auto; gap: 12px; scroll-snap-type: x mandatory; padding-bottom: 8px;">
   <img src="desc/screenshots/screenshot1.png" alt="screenshot" style="width:100%; max-width:400px; height:auto; flex-shrink:0; scroll-snap-align: start;">
   <img src="desc/screenshots/screenshot2.png" alt="screenshot" style="width:100%; max-width:400px; height:auto; flex-shrink:0; scroll-snap-align: start;">

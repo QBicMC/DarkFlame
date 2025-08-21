@@ -22,7 +22,7 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
 @EventBusSubscriber
-public class ClientEvents {
+public class ClientListeners {
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Util.Scheduler.updateClient();

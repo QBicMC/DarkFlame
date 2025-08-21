@@ -10,6 +10,7 @@ import github.qbic.darkflame.networking.ModVariables;
 import github.qbic.darkflame.networking.S2C.ClientNonSystemChatPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericMessageScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,6 +45,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
 import java.time.LocalTime;
@@ -288,18 +290,33 @@ public class Util {
     public static void printDBG(String msg) {
         if (!DarkFlame.DEBUG) return;
         System.out.println(getTime() + " [" + CONSOLE_NAME + " - " + ConsoleFormat.GREEN + "DEBUG" + ConsoleFormat.RESET + "] " + msg);
-//        ((ServerPlayer) Brain.getTarget()).sendSystemMessage(Component.literal(msg));
+
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server != null && !server.overworld().isClientSide()) {
+            ServerPlayer player = ((ServerPlayer) Brain.getTarget());
+            player.sendSystemMessage(Component.literal("§a[DEBUG] " + msg));
+        } else if (Minecraft.getInstance().level != null) {
+            Minecraft.getInstance().gui.getChat().addMessage(Component.literal("§a[DEBUG] " + msg), null, null);
+        }
     }
 
     public static void printDBG(String msg, Object... format) {
         if (!DarkFlame.DEBUG) return;
         System.out.printf(getTime() + " [" + CONSOLE_NAME + " - " + ConsoleFormat.GREEN + "DEBUG" + ConsoleFormat.RESET + "] " + msg + "\n", format);
-//        ((ServerPlayer) Brain.getTarget()).sendSystemMessage(Component.literal(msg));
+
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server != null && !server.overworld().isClientSide()) {
+            ServerPlayer player = ((ServerPlayer) Brain.getTarget());
+            player.sendSystemMessage(Component.literal("§a[DEBUG] " + msg));
+        } else if (Minecraft.getInstance().level != null) {
+            Minecraft.getInstance().gui.getChat().addMessage(Component.literal("§a[DEBUG] " + msg), null, null);
+        }
     }
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+
     public static String getTime() {
-        LocalTime time = LocalTime.now();
-        return "[" + time.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "]";
+        return "[" + LocalTime.now().format(FORMATTER) + "]";
     }
 
     public static Entity spawnEntityAt(BlockPos pos, Level level, EntityType<? extends Entity> type) {
